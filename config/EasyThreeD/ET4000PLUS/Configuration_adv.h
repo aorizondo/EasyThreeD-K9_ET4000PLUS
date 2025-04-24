@@ -3830,7 +3830,7 @@
     #define BUTTON1_DESC          "Homing"  // Optional string to set the LCD status
   #endif
 
-  //#define BUTTON2_PIN PB3
+  #define BUTTON2_PIN PB3
   #if PIN_EXISTS(BUTTON2)
     #define BUTTON2_HIT_STATE     HIGH
     #define BUTTON2_WHEN_PRINTING false
@@ -3839,12 +3839,48 @@
     #define BUTTON2_DESC          "Load Filament"
   #endif
 
-  //#define BUTTON3_PIN PB5
+  #define BUTTON3_PIN PB5
   #if PIN_EXISTS(BUTTON3)
     #define BUTTON3_HIT_STATE     HIGH
     #define BUTTON3_WHEN_PRINTING false
     #define BUTTON3_GCODE         "M702"
     #define BUTTON3_DESC          "Unload Filament"
+  #endif
+
+  // Levelling button 1
+  #define BUTTON4_PIN PC7
+  #if PIN_EXISTS(BUTTON4)
+    #define BUTTON4_HIT_STATE     LOW
+    #define BUTTON4_WHEN_PRINTING false
+    #define BUTTON4_GCODE         "G0 Z5\nG0 X0 Y0\nG0 Z0"
+    #define BUTTON4_DESC          "Levelling Position 1"
+  #endif
+
+  // Levelling button 2
+  #define BUTTON5_PIN PC11
+  #if PIN_EXISTS(BUTTON5)
+    #define BUTTON5_HIT_STATE     LOW
+    #define BUTTON5_WHEN_PRINTING false
+    #define BUTTON5_GCODE         "G0 Z5\nG0 X0 Y100\nG0 Z0"
+    #define BUTTON5_DESC          "Levelling Position 2"
+  #endif
+
+  // Levelling button 3
+  #define BUTTON6_PIN PA2
+  #if PIN_EXISTS(BUTTON6)
+    #define BUTTON6_HIT_STATE     HIGH
+    #define BUTTON6_WHEN_PRINTING false
+    #define BUTTON6_GCODE         "G0 Z5\nG0 X100 Y100\nG0 Z0"
+    #define BUTTON6_DESC          "Levelling Position 3"
+  #endif
+
+  // Levelling button 4
+  #define BUTTON7_PIN PA3
+  #if PIN_EXISTS(BUTTON7)
+    #define BUTTON7_HIT_STATE     HIGH
+    #define BUTTON7_WHEN_PRINTING false
+    #define BUTTON7_GCODE         "G0 Z5\nG0 X100 Y0\nG0 Z0"
+    #define BUTTON7_DESC          "Levelling Position 4"
   #endif
 #endif
 
@@ -4241,7 +4277,7 @@
 //
 // M43 - display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe
 //
-//#define PINS_DEBUGGING
+#define PINS_DEBUGGING
 
 // Enable Tests that will run at startup and produce a report
 //#define MARLIN_TEST_BUILD
