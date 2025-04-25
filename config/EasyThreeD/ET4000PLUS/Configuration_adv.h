@@ -3820,7 +3820,7 @@
  * Up to 25 may be defined.
  */
 // Home Button
-#define CUSTOM_USER_BUTTONS
+//#define CUSTOM_USER_BUTTONS
 #if ENABLED(CUSTOM_USER_BUTTONS)
   #define BUTTON1_PIN PC3
   #if PIN_EXISTS(BUTTON1)
