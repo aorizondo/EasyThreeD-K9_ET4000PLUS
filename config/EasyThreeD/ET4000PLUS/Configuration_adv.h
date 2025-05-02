@@ -2316,7 +2316,7 @@
  * less step aliasing by calculating all motions in advance.
  * Preparing your G-code: https://github.com/colinrgodsey/step-daemon
  */
-#define DIRECT_STEPPING
+//#define DIRECT_STEPPING
 
 /**
  * G38 Probe Target
