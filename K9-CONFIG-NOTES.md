@@ -14,7 +14,7 @@ físicos, con sonda Z de nivelación). Generado durante la sesión de reconfigur
 | Pines corriente PWM | XY=`PB0`, Z=`PA7`, E=`PA6` (XY comparten un canal) |
 | Default boot current | `PWM_MOTOR_CURRENT {800,800,800}` (XY, Z, E) en mA aprox. |
 | Endstops físicos | **NINGUNO** (se quitaron; M119 da `x/y/z_min: open`) |
-| Sonda Z | Reciclada de impresora de papel, **brazo basculante** sobre eje X, **deploy manual**. En pin `Z+` (Z_MAX). Reposo=HIGH=open, contacto=LOW=triggered |
+| Sonda Z | Reciclada de impresora de papel, **brazo basculante** sobre eje X, **deploy manual**. En pin `Z+` (Z_MAX). VERIFICADO: sin contacto=LOW=open, contacto=HIGH=triggered → `Z_MIN_PROBE_ENDSTOP_INVERTING=false` |
 | Sensor filamento | Pin presente; irá un sensor **fotosensible** (lógica `HIGH`) |
 | Volumen | 100 × 100 × 100 mm |
 | Steps/mm | X606 Y606 Z600 E1040 |
