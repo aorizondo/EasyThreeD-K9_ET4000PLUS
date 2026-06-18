@@ -802,3 +802,5 @@
 #define _HAS_E_TEMP(N) || TEMP_SENSOR(N)
 #define HAS_E_TEMP_SENSOR (0 REPEAT(EXTRUDERS, _HAS_E_TEMP))
 #define TEMP_SENSOR_IS_MAX_TC(T) (TEMP_SENSOR(T) == -5 || TEMP_SENSOR(T) == -3 || TEMP_SENSOR(T) == -2)
+
+#define DGUS_UI_IS(...) 0 // Dummy macro needed for future preflight checking
