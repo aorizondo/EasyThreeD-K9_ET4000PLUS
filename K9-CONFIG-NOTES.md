@@ -101,3 +101,31 @@ indeterminada** (brazo basculante), así que el offset Z se calibra empíricamen
 > Estimación inicial del offset: **X−10 mm, Y+25 mm, Z−2 mm**.
 > Opcional: `PAUSE_BEFORE_DEPLOY_STOW` hace que Marlin pause y pida desplegar/recoger
 > la sonda manualmente (ideal para deploy manual).
+
+## ⚠️ Reporte en tiempo real — `FULL_REPORT_TO_HOST_FEATURE` rompe los hosts estándar
+
+`Configuration_adv.h` activa, bajo `REALTIME_REPORTING_COMMANDS`, el feature
+**`FULL_REPORT_TO_HOST_FEATURE`**: Marlin auto-reporta su estado en formato Grbl/CNC
+(`<Idle|MPos:0.000,0.000,0.000|...>`) de forma **continua y no solicitada**.
+
+Los hosts de impresión 3D estándar hablan el **protocolo de líneas de Marlin** (esperan un
+`ok` por comando y parsean `X:.. Y:.. Z:.. Count` / `T:.. B:..`). **No entienden** el flujo
+Grbl `<...>` y el flood **ROMPE la conexión**:
+
+- **OctoPrint**: la impresora puede no conectar, colgarse, dar timeout o quedar sin
+  responder **justo tras flashear** (observado en esta placa).
+- **Pronterface / Repetier / Cura / la mayoría**: mismo problema.
+
+**Mantenerlo activo SOLO si el host consume y suprime los `<...>`.** En OctoPrint eso es un
+plugin que engancha `octoprint.comm.protocol.gcode.received`, parsea cada `<...>` y devuelve
+`""` para que OctoPrint no lo procese (lo hace el plugin **OctoPrint Boost Kit / k9suite**, que
+además usa la posición en vivo para animar el homing/probing en su visor 3D).
+
+**Si tu host falla / no conecta tras flashear:**
+
+1. Comenta el feature: `//#define FULL_REPORT_TO_HOST_FEATURE`, recompila y reflashea.
+2. No pierdes posición en vivo: `REALTIME_REPORTING_COMMANDS` (`S000`/`P000`/`R000`) y
+   **`AUTO_REPORT_POSITION`** (`M154 S<seg>`, formato Marlin, **seguro para el host**) siguen
+   disponibles y bastan para sincronizar la posición **sin** el flood Grbl.
+3. Recuperación: hay un `mksLite.bin` conocido-bueno SIN este feature en el historial git
+   (commits `revert: ... FULL_REPORT_TO_HOST_FEATURE`).

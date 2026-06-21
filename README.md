@@ -40,6 +40,39 @@ Compiled binary - mksLite.bin
 - Multiple calls in quick succession to queue.inject_P() will fail. Use a single call, with multiple commands seprated by "\n"
 - Setting acceleration of around 100 or higher may result in layer shifting when backlash compensation is enabled (see https://github.com/schmttc/EasyThreeD-K7-STM32/issues/2 )
 
+## ⚠️ Host compatibility — `FULL_REPORT_TO_HOST_FEATURE` can break your host
+
+This firmware enables **`FULL_REPORT_TO_HOST_FEATURE`** (in `Configuration_adv.h`, under
+`REALTIME_REPORTING_COMMANDS`). With it, Marlin **auto-reports its status in Grbl/CNC format**
+( `<Idle|MPos:0.000,0.000,0.000|...>` ) **continuously and unsolicited**.
+
+Standard 3D-printing hosts speak the **Marlin line protocol** (they expect an `ok` per command and
+parse `X:.. Y:.. Z:.. Count` / `T:.. B:..` lines). They do **not** understand the Grbl `<...>` stream,
+and the continuous flood will **break the connection**:
+
+- **OctoPrint**: the printer may fail to connect, hang, time out, or appear unresponsive **right after
+  flashing**. (Observed on this board.)
+- **Pronterface / Repetier / Cura / most others**: same problem.
+
+### Keep it ONLY if your host consumes & suppresses the `<...>` reports
+
+For OctoPrint that means a plugin hooking `octoprint.comm.protocol.gcode.received` that parses each
+`<...>` line and returns `""` so OctoPrint never processes it. The companion plugin **OctoPrint Boost Kit
+/ k9suite** does exactly this (and uses the live position to animate homing/probing in its 3D viewer).
+
+### If your host fails / won't connect after flashing this firmware
+
+1. Comment out the feature: in `config/EasyThreeD/ET4000PLUS/Configuration_adv.h` change
+   `#define FULL_REPORT_TO_HOST_FEATURE` to `//#define FULL_REPORT_TO_HOST_FEATURE`, then rebuild and
+   re-flash. The printer will work with **any** standard host.
+2. You don't lose live position: **`REALTIME_REPORTING_COMMANDS`** (`S000`/`P000`/`R000`) and
+   **`AUTO_REPORT_POSITION`** (`M154 S<seconds>`, **Marlin-format, host-SAFE**) stay available and are
+   enough for a live position sync **without** the Grbl flood.
+
+**Recovery:** a known-good `mksLite.bin` *without* this feature exists in this folder's git history — look
+for commits like `revert: ... FULL_REPORT_TO_HOST_FEATURE` and check out
+`config/EasyThreeD/ET4000PLUS/mksLite.bin` from there to re-flash a working build immediately.
+
 ## License
 Marlin Firmware: https://github.com/MarlinFirmware/Marlin
 

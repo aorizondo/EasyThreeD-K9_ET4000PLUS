@@ -2470,7 +2470,39 @@
  */
 #define REALTIME_REPORTING_COMMANDS
 #if ENABLED(REALTIME_REPORTING_COMMANDS)
-  #define FULL_REPORT_TO_HOST_FEATURE   // Auto-report the machine status like Grbl CNC
+  /**
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!  HOST COMPATIBILITY WARNING  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   *
+   * FULL_REPORT_TO_HOST_FEATURE makes Marlin AUTO-REPORT its status in Grbl/CNC
+   * format ( "<Idle|MPos:0.000,0.000,0.000|...>" ) CONTINUOUSLY and UNSOLICITED.
+   *
+   * Standard 3D-printing hosts speak the Marlin line protocol (they expect an
+   * "ok" per command and parse "X:.. Y:.. Z:.. Count" / "T:.. B:.." lines). They
+   * do NOT understand the Grbl "<...>" stream, and the continuous flood will
+   * BREAK the connection:
+   *   - OctoPrint: the printer may fail to connect, hang, time out, or appear
+   *     unresponsive right after flashing. (Observed on this board.)
+   *   - Pronterface / Repetier / most others: same problem.
+   *
+   * KEEP THIS ENABLED ONLY IF your host CONSUMES and SUPPRESSES the "<...>"
+   * reports. For OctoPrint that means a plugin that hooks
+   * `octoprint.comm.protocol.gcode.received`, parses each "<...>" line and
+   * returns "" so OctoPrint never processes it. (The companion plugin
+   * "OctoPrint Boost Kit / k9suite" does exactly this and uses the live position
+   * to animate homing/probing in its 3D viewer.)
+   *
+   * IF YOUR HOST FAILS / WON'T CONNECT AFTER FLASHING THIS FIRMWARE:
+   *   1) Comment out the line below ( //#define FULL_REPORT_TO_HOST_FEATURE ),
+   *      rebuild and re-flash. The printer will work with any standard host.
+   *   2) REALTIME_REPORTING_COMMANDS (S000/P000/R000) and AUTO_REPORT_POSITION
+   *      (M154, Marlin-format, host-SAFE) stay available and are enough for a
+   *      live position sync without the Grbl flood.
+   *
+   * Recovery: a known-good .bin WITHOUT this feature is kept in this folder's
+   * git history (see commits tagged "revert: ... FULL_REPORT_TO_HOST_FEATURE").
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   */
+  #define FULL_REPORT_TO_HOST_FEATURE   // Auto-report status like Grbl. SEE WARNING ABOVE.
 #endif
 
 /**
