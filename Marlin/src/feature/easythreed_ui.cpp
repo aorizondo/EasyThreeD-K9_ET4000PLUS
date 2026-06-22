@@ -44,6 +44,18 @@ void EasythreedUI::init() {
   SET_INPUT_PULLUP(BTN_RETRACT);  SET_OUTPUT(BTN_RETRACT_GND);
   SET_INPUT_PULLUP(BTN_PRINT);
   SET_OUTPUT(EASYTHREED_LED_PIN);
+
+  // Botones de posición (CUSTOM_USER_BUTTONS) en el socket del módulo WiFi.
+  // En STM32F1, INIT_CUSTOM_USER_BUTTON_PIN usa SET_INPUT (GPIO_INPUT_FLOATING)
+  // + WRITE, idiom de AVR que aquí NO activa el pull-up: los pines quedan
+  // FLOTANTES. PC7/PC11 sobreviven por pull-ups externos del socket, pero
+  // PA2/PA3 (ex-USART2, sin pull externo) nunca leen la pulsación. Forzamos el
+  // pull-up interno aquí; init() corre después del init de CUSTOM_USER_BUTTONS
+  // en setup(), así que esta configuración prevalece.
+  SET_INPUT_PULLUP(PC7);   // botón 1
+  SET_INPUT_PULLUP(PC11);  // botón 2
+  SET_INPUT_PULLUP(PA2);   // botón 3
+  SET_INPUT_PULLUP(PA3);   // botón 4
 }
 
 void EasythreedUI::run() {
