@@ -1205,7 +1205,7 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 6000, 6000, 6000, 6000 }
+#define DEFAULT_MAX_FEEDRATE          { 20, 20, 5, 20 }   // mm/s. Motores 24BYJ28 engranados (lentos); max recomendable ~20 mm/s @800mA
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1218,7 +1218,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 1000, 1000 }
+#define DEFAULT_MAX_ACCELERATION      { 150, 150, 40, 250 }   // baja a proposito: los 24BYJ28 baratos pierden pasos con accel alta -> prioridad precision
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1233,9 +1233,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          300  // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  300  // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   300  // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          150  // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  250  // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   150  // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1275,7 +1275,7 @@
  *   https://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.08 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.04 // (mm) Distance from real junction edge -- bajo para esquinas suaves/precisas
   #define JD_HANDLE_SMALL_SEGMENTS    // Use curvature estimation instead of just the junction angle
                                       // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -1705,8 +1705,9 @@
  *  - Use a large value (i.e., Z_MAX_POS) if the bed falls down, away from the nozzle.
  */
 //#define Z_IDLE_HEIGHT Z_HOME_POS
+#define EDITABLE_HOMING_FEEDRATE
 
-#define Z_HOMING_HEIGHT  5        // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT  15        // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
 #define Z_AFTER_HOMING  0.0         // (mm) Height to move to after homing Z
@@ -2132,7 +2133,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (1000*60), (1000*60), (1000*60) }
+#define HOMING_FEEDRATE_MM_M { (20*60), (20*60), (4*60) }   // X/Y 20, Z 4 mm/s (antes 1000 mm/s, irreal)
 
 // Validate that endstops are triggered on homing moves
 //#define VALIDATE_HOMING_ENDSTOPS
