@@ -45,14 +45,16 @@ void EasythreedUI::init() {
   SET_INPUT_PULLUP(BTN_PRINT);
   SET_OUTPUT(EASYTHREED_LED_PIN);
 
-  // Botones de posición 3 y 4 (CUSTOM_USER_BUTTONS = PA2/PA3) comparten como masa
-  // común el pin PA12 del socket WiFi (el pin más a la izquierda del slot ESP-12S,
-  // confirmado con multímetro). De fábrica PA12 queda como entrada flotante a 3.3V
-  // (pull-up externo), igual que PA2/PA3, así que al pulsar se conecta HIGH con HIGH
-  // y nunca se detecta. Lo ponemos como SALIDA LOW para que haga de tierra (mismo
-  // truco que los BTN_*_GND de HOME/feed/retract). PA12 está libre: el USB del
-  // ET4000+ va por un conversor serie externo, no por el USB nativo del STM32.
-  SET_OUTPUT(PA12);   // masa común de los botones de posición 3 y 4
+  // Botones de posición 3 y 4 (CUSTOM_USER_BUTTONS = PA2/PA3). Su común es el riel
+  // de 3.3V (FUENTE, confirmado a multímetro: continuidad con el regulador), así que
+  // son botones a VCC: al pulsar el pin sube a 3.3V. Para detectarlos deben idle en
+  // LOW -> pull-down interno. En STM32F1, CUSTOM_USER_BUTTONS deja el pin flotante,
+  // así que forzamos el pull-down aquí (init() corre después).
+  // OJO: PA2/PA3 tienen pull-ups externos (R25/R26/R27 a 3V3). Si esos ganan, el pin
+  // se queda en HIGH y con HIT_STATE HIGH dispararía en bucle -> hay que VERIFICAR
+  // que con esto idle en LOW antes de poner gcodes con movimiento.
+  SET_INPUT_PULLDOWN(PA2);   // botón 3 (señal: idle LOW, dispara al subir a 3V3)
+  SET_INPUT_PULLDOWN(PA3);   // botón 4
 }
 
 void EasythreedUI::run() {
