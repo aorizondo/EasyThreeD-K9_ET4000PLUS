@@ -1035,7 +1035,7 @@
 #if ENABLED(ASSISTED_TRAMMING)
 
   // Define from 3 to 9 points to probe.
-  #define TRAMMING_POINT_XY { {  10, 10 }, { 90,  10 }, { 90, 90 }, { 10, 90 } }
+  #define TRAMMING_POINT_XY { {  0, 0 }, { 100,  0 }, { 100, 100 }, { 0, 100 } }
 
   // Define position names for probe points.
   #define TRAMMING_POINT_NAME_1 "Front-Left"
@@ -1048,7 +1048,7 @@
 
   //#define ASSISTED_TRAMMING_WIZARD    // Add a Tramming Wizard to the LCD menu
 
-  #define ASSISTED_TRAMMING_WAIT_POSITION { X_CENTER, Y_MAX_POS, Z_MAX_POS } // Move the nozzle out of the way for adjustment
+  #define ASSISTED_TRAMMING_WAIT_POSITION { X_CENTER, Y_MAX_POS, Z_MAX_POS/2 } // Move the nozzle out of the way for adjustment
 
   /**
    * Screw thread:
@@ -1094,7 +1094,7 @@
     #define SHAPING_FREQ_Y  40.0        // (Hz) The default dominant resonant frequency on the Y axis.
     #define SHAPING_ZETA_Y   0.15       // Damping ratio of the Y axis (range: 0.0 = no damping to 1.0 = critical damping).
   #endif
-  //#define SHAPING_MIN_FREQ  20.0      // (Hz) By default the minimum of the shaping frequencies. Override to affect SRAM usage.
+  #define SHAPING_MIN_FREQ  20.0      // (Hz) By default the minimum of the shaping frequencies. Override to affect SRAM usage.
   //#define SHAPING_MAX_STEPRATE 10000  // By default the maximum total step rate of the shaped axes. Override to affect SRAM usage.
   //#define SHAPING_MENU                // Add a menu to the LCD to set shaping parameters.
 #endif
@@ -3852,7 +3852,7 @@
  * Up to 25 may be defined.
  */
 // Home Button
-//#define CUSTOM_USER_BUTTONS
+#define CUSTOM_USER_BUTTONS
 #if ENABLED(CUSTOM_USER_BUTTONS)
   #define BUTTON1_PIN PC3
   #if PIN_EXISTS(BUTTON1)
@@ -3862,57 +3862,40 @@
     #define BUTTON1_DESC          "Homing"  // Optional string to set the LCD status
   #endif
 
-  #define BUTTON2_PIN PB3
-  #if PIN_EXISTS(BUTTON2)
-    #define BUTTON2_HIT_STATE     HIGH
-    #define BUTTON2_WHEN_PRINTING false
-    //#define BUTTON2_GCODE         "M701"
-    #define BUTTON2_GCODE         "M104 S200\nG1 F100 E0"
-    #define BUTTON2_DESC          "Load Filament"
-  #endif
-
-  #define BUTTON3_PIN PB5
-  #if PIN_EXISTS(BUTTON3)
-    #define BUTTON3_HIT_STATE     HIGH
-    #define BUTTON3_WHEN_PRINTING false
-    #define BUTTON3_GCODE         "M702"
-    #define BUTTON3_DESC          "Unload Filament"
-  #endif
-
   // Levelling button 1
-  #define BUTTON4_PIN PC7
-  #if PIN_EXISTS(BUTTON4)
-    #define BUTTON4_HIT_STATE     LOW
-    #define BUTTON4_WHEN_PRINTING false
-    #define BUTTON4_GCODE         "G0 Z5\nG0 X0 Y0\nG0 Z0"
-    #define BUTTON4_DESC          "Levelling Position 1"
+  #define BUTTON2_PIN PC7
+  #if PIN_EXISTS(BUTTON2)
+    #define BUTTON2_HIT_STATE     LOW
+    #define BUTTON2_WHEN_PRINTING false
+    #define BUTTON2_GCODE         "G0 Z5\nG0 X0 Y0\nG0 Z0"
+    #define BUTTON2_DESC          "Levelling Position 1"
   #endif
 
   // Levelling button 2
-  #define BUTTON5_PIN PC11
-  #if PIN_EXISTS(BUTTON5)
-    #define BUTTON5_HIT_STATE     LOW
-    #define BUTTON5_WHEN_PRINTING false
-    #define BUTTON5_GCODE         "G0 Z5\nG0 X0 Y100\nG0 Z0"
-    #define BUTTON5_DESC          "Levelling Position 2"
+  #define BUTTON3_PIN PC11
+  #if PIN_EXISTS(BUTTON3)
+    #define BUTTON3_HIT_STATE     LOW
+    #define BUTTON3_WHEN_PRINTING false
+    #define BUTTON3_GCODE         "G0 Z5\nG0 X0 Y100\nG0 Z0"
+    #define BUTTON3_DESC          "Levelling Position 2"
   #endif
 
   // Levelling button 3
-  #define BUTTON6_PIN PA2
-  #if PIN_EXISTS(BUTTON6)
-    #define BUTTON6_HIT_STATE     HIGH
-    #define BUTTON6_WHEN_PRINTING false
-    #define BUTTON6_GCODE         "G0 Z5\nG0 X100 Y100\nG0 Z0"
-    #define BUTTON6_DESC          "Levelling Position 3"
+  #define BUTTON4_PIN PA2
+  #if PIN_EXISTS(BUTTON4)
+    #define BUTTON4_HIT_STATE     HIGH
+    #define BUTTON4_WHEN_PRINTING false
+    #define BUTTON4_GCODE         "G0 Z5\nG0 X100 Y100\nG0 Z0"
+    #define BUTTON4_DESC          "Levelling Position 3"
   #endif
 
   // Levelling button 4
-  #define BUTTON7_PIN PA3
-  #if PIN_EXISTS(BUTTON7)
-    #define BUTTON7_HIT_STATE     HIGH
-    #define BUTTON7_WHEN_PRINTING false
-    #define BUTTON7_GCODE         "G0 Z5\nG0 X100 Y0\nG0 Z0"
-    #define BUTTON7_DESC          "Levelling Position 4"
+  #define BUTTON5_PIN PA3
+  #if PIN_EXISTS(BUTTON5)
+    #define BUTTON5_HIT_STATE     HIGH
+    #define BUTTON5_WHEN_PRINTING false
+    #define BUTTON5_GCODE         "G0 Z5\nG0 X100 Y0\nG0 Z0"
+    #define BUTTON5_DESC          "Levelling Position 4"
   #endif
 #endif
 
@@ -4304,7 +4287,7 @@
 //
 // M42 - Set pin states
 //
-//#define DIRECT_PIN_CONTROL
+#define DIRECT_PIN_CONTROL
 
 //
 // M43 - display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe
