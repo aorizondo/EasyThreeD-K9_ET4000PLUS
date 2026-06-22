@@ -44,6 +44,15 @@ void EasythreedUI::init() {
   SET_INPUT_PULLUP(BTN_RETRACT);  SET_OUTPUT(BTN_RETRACT_GND);
   SET_INPUT_PULLUP(BTN_PRINT);
   SET_OUTPUT(EASYTHREED_LED_PIN);
+
+  // Botones de posición 3 y 4 (CUSTOM_USER_BUTTONS = PA2/PA3) comparten como masa
+  // común el pin PA12 del socket WiFi (el pin más a la izquierda del slot ESP-12S,
+  // confirmado con multímetro). De fábrica PA12 queda como entrada flotante a 3.3V
+  // (pull-up externo), igual que PA2/PA3, así que al pulsar se conecta HIGH con HIGH
+  // y nunca se detecta. Lo ponemos como SALIDA LOW para que haga de tierra (mismo
+  // truco que los BTN_*_GND de HOME/feed/retract). PA12 está libre: el USB del
+  // ET4000+ va por un conversor serie externo, no por el USB nativo del STM32.
+  SET_OUTPUT(PA12);   // masa común de los botones de posición 3 y 4
 }
 
 void EasythreedUI::run() {
@@ -142,7 +151,7 @@ void EasythreedUI::loadButton() {
       }
       else if (!flag) {
         flag = true;
-        queue.inject(!READ(BTN_RETRACT) ? F("G91\nG0 E10 F180\nG0 E-120 F180\nM104 S0") : F("G91\nG0 E100 F120\nM104 S0"));
+        queue.inject(!READ(BTN_RETRACT) ? F("G91\nG0 E10 F180\nG0 E-120 F180\nG90\nM104 S0") : F("G91\nG0 E100 F120\nG90\nM104 S0"));
       }
     } break;
   }

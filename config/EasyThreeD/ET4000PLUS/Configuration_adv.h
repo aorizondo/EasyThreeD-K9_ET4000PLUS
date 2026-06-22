@@ -3859,7 +3859,7 @@
   #if PIN_EXISTS(BUTTON1)
     #define BUTTON1_HIT_STATE     LOW
     #define BUTTON1_WHEN_PRINTING false
-    #define BUTTON1_GCODE         "G0 Z5\nG0 X0 Y0\nG0 Z0"
+    #define BUTTON1_GCODE         "G90\nG0 Z5\nG0 X0 Y0\nG0 Z0"
     #define BUTTON1_DESC          "Levelling Position 1"
   #endif
 
@@ -3868,7 +3868,7 @@
   #if PIN_EXISTS(BUTTON2)
     #define BUTTON2_HIT_STATE     LOW
     #define BUTTON2_WHEN_PRINTING false
-    #define BUTTON2_GCODE         "G0 Z5\nG0 X0 Y100\nG0 Z0"
+    #define BUTTON2_GCODE         "G90\nG0 Z5\nG0 X0 Y100\nG0 Z0"
     #define BUTTON2_DESC          "Levelling Position 2"
   #endif
 
@@ -3877,7 +3877,7 @@
   #if PIN_EXISTS(BUTTON3)
     #define BUTTON3_HIT_STATE     LOW
     #define BUTTON3_WHEN_PRINTING false
-    #define BUTTON3_GCODE         "G0 Z5\nG0 X100 Y100\nG0 Z0"
+    #define BUTTON3_GCODE         "G90\nG0 Z5\nG0 X100 Y100\nG0 Z0"
     #define BUTTON3_DESC          "Levelling Position 3"
   #endif
 
@@ -3886,7 +3886,7 @@
   #if PIN_EXISTS(BUTTON4)
     #define BUTTON4_HIT_STATE     LOW
     #define BUTTON4_WHEN_PRINTING false
-    #define BUTTON4_GCODE         "G0 Z5\nG0 X100 Y0\nG0 Z0"
+    #define BUTTON4_GCODE         "G90\nG0 Z5\nG0 X100 Y0\nG0 Z0"
     #define BUTTON4_DESC          "Levelling Position 4"
   #endif
 
