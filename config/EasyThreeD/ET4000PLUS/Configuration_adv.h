@@ -3877,9 +3877,7 @@
   #if PIN_EXISTS(BUTTON3)
     #define BUTTON3_HIT_STATE     HIGH   // boton a VCC (comun = 3V3); pull-down en init
     #define BUTTON3_WHEN_PRINTING false
-    // TEST inofensivo (solo eco, sin movimiento) hasta confirmar que el pull-down gana.
-    // Real: "G90\nG0 Z5\nG0 X100 Y100\nG0 Z0"
-    #define BUTTON3_GCODE         "M118 BK_BTN3_OK"
+    #define BUTTON3_GCODE         "G90\nG0 Z5\nG0 X100 Y100\nG0 Z0"
     #define BUTTON3_DESC          "Levelling Position 3"
   #endif
 
@@ -3888,9 +3886,7 @@
   #if PIN_EXISTS(BUTTON4)
     #define BUTTON4_HIT_STATE     HIGH   // boton a VCC (comun = 3V3); pull-down en init
     #define BUTTON4_WHEN_PRINTING false
-    // TEST inofensivo (solo eco, sin movimiento) hasta confirmar que el pull-down gana.
-    // Real: "G90\nG0 Z5\nG0 X100 Y0\nG0 Z0"
-    #define BUTTON4_GCODE         "M118 BK_BTN4_OK"
+    #define BUTTON4_GCODE         "G90\nG0 Z5\nG0 X100 Y0\nG0 Z0"
     #define BUTTON4_DESC          "Levelling Position 4"
   #endif
 
