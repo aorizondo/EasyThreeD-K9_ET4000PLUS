@@ -129,3 +129,22 @@ además usa la posición en vivo para animar el homing/probing en su visor 3D).
    disponibles y bastan para sincronizar la posición **sin** el flood Grbl.
 3. Recuperación: hay un `mksLite.bin` conocido-bueno SIN este feature en el historial git
    (commits `revert: ... FULL_REPORT_TO_HOST_FEATURE`).
+
+---
+
+## Nivelación 7×7 + 4 medidas + slots UBL (Boost Kit, 2026-06)
+
+- **Grid UBL 5×5 → 7×7**: `config/EasyThreeD/ET4000PLUS/Configuration.h`
+  (`GRID_MAX_POINTS_X 7`, bloque `AUTO_BED_LEVELING_UBL`).
+- **4 medidas por punto**: `Marlin/config.ini` → `multiple_probing=3`, `extra_probing=1`
+  (TOTAL_PROBING=4: 4 lecturas, descarta el outlier, promedia 3).
+  La vía **plugin** (Boost Kit) sondea con G30 ×4 y calcula la **moda**; la vía
+  **G29 nativa** (sin plugin) usa el promedio/mediana de Marlin.
+- **Slots UBL**: `EEPROM_SETTINGS` y `UBL_SAVE_ACTIVE_ON_M500` ya estaban activos.
+  El plugin guarda con `G29 S<slot>` + `M500` y activa con `G29 L<slot>` + `M420 S1`.
+  El plugin gestiona el **nombre→índice** y guarda copia de los Z para visualizar.
+- **VERIFICAR tras flashear**: `M503` debe reportar el grid 7×7 y UBL debe listar
+  **≥4 slots** (`G29 L`). Con 7×7 (49 pts × 4 B ≈ 196 B/malla) deben caber 4 en la
+  EEPROM emulada del STM32F103; si no, reducir slots usados en el plugin.
+- Área imprimible se mantiene en **100×100** (ejes); la cama real 120×120 y el margen
+  de 10mm son solo representacionales en el plugin (visor de gcode + visor topográfico).
