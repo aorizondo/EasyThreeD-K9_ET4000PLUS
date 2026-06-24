@@ -2502,7 +2502,7 @@
    * git history (see commits tagged "revert: ... FULL_REPORT_TO_HOST_FEATURE").
    * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    */
-  #define FULL_REPORT_TO_HOST_FEATURE   // Auto-report status like Grbl. SEE WARNING ABOVE.
+  // #define FULL_REPORT_TO_HOST_FEATURE   // Auto-report status like Grbl. SEE WARNING ABOVE.
 #endif
 
 /**
