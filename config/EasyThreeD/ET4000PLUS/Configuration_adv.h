@@ -318,7 +318,7 @@
    * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
    * below 2.
    */
-  #define WATCH_TEMP_PERIOD  60               // (seconds)
+  #define WATCH_TEMP_PERIOD  20               // (seconds) K10 factory
   #define WATCH_TEMP_INCREASE 2               // (°C)
 #endif
 
@@ -332,7 +332,7 @@
   /**
    * As described above, except for the bed (M140/M190/M303).
    */
-  #define WATCH_BED_TEMP_PERIOD                60 // (seconds)
+  #define WATCH_BED_TEMP_PERIOD                20 // (seconds) K10 factory
   #define WATCH_BED_TEMP_INCREASE               2 // (°C)
 #endif
 
@@ -1312,7 +1312,7 @@
  *    M908 - BQ_ZUM_MEGA_3D, RAMBO, PRINTRBOARD_REVF, RIGIDBOARD_V2 & SCOOVO_X9H
  *    M909, M910 & LCD - only PRINTRBOARD_REVF & RIGIDBOARD_V2
  */
-#define PWM_MOTOR_CURRENT {800, 800, 800}          // { 1300, 1300, 1250 } Values in milliamps
+#define PWM_MOTOR_CURRENT {700, 800, 800}          // K10 factory: XY=700mA, Z=800mA, E=800mA
 //#define DIGIPOT_MOTOR_CURRENT { 135,135,135,135,135 }   // Values 0-255 (RAMBO 135 = ~0.75A, 185 = ~1A)
 //#define DAC_MOTOR_CURRENT_DEFAULT { 70, 80, 90, 80 }    // Default drive percent - X, Y, Z, E axis
 
