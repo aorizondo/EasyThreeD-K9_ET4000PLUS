@@ -3251,7 +3251,6 @@
 // EasyThreeD ET-4000+ with button input and status LED
 //
 //#define EASYTHREED_UI          // Custom ET4000+: SIN botones, slider de filamento ni LED de fabrica
-//#define EASYTHREED_ET4000PLUS // Mainboard model for Nano/recent K7
 
 //=============================================================================
 //=============================== Extra Features ==============================
