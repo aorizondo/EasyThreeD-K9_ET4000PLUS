@@ -63,7 +63,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(aorizondo)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "aorizondo" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -1132,8 +1132,8 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING false  // Set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false  // Set to true to invert the logic of the endstop.
+#define X_MIN_ENDSTOP_INVERTING true  // Set to true to invert the logic of the endstop.
+#define Y_MIN_ENDSTOP_INVERTING true  // Set to true to invert the logic of the endstop.
 #define Z_MIN_ENDSTOP_INVERTING true  // Sin switch en Z (usa sonda): true -> pin pull-up HIGH lee 'open', no interfiere con el probing.
 #define I_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define J_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
@@ -1737,7 +1737,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS 330
 #define Y_MAX_POS 380
-#define Z_MAX_POS 200
+#define Z_MAX_POS 250
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -2129,8 +2129,8 @@
 #define Z_SAFE_HOMING   // Custom ET4000+: antes de bajar Z lleva el cabezal al punto fijo de sondeo
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT 165  // (mm) <-- CAMBIA a tu punto de sondeo Z preferido (recompilar)
-  #define Z_SAFE_HOMING_Y_POINT 190  // (mm) <-- CAMBIA a tu punto de sondeo Z preferido (recompilar)
+  #define Z_SAFE_HOMING_X_POINT X_CENTER  // (mm) Centro de la cama para el sondeo Z
+  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // (mm) Centro de la cama para el sondeo Z
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)

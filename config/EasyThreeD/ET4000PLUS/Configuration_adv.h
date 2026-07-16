@@ -1592,7 +1592,7 @@
     // Enable if Z homing is needed for proper recovery. 99.9% of the time this should be disabled!
     #define POWER_LOSS_RECOVER_ZHOME   // Custom ET4000+: la cama CAE al perder energia -> se pierde Z, hay que re-homear Z
     #if ENABLED(POWER_LOSS_RECOVER_ZHOME)
-      #define POWER_LOSS_ZHOME_POS { 165, 190 } // XY despejado para re-homear Z (= punto de Z_SAFE_HOMING)
+      #define POWER_LOSS_ZHOME_POS { X_CENTER, Y_CENTER } // XY para re-homear Z (= centro, punto de Z_SAFE_HOMING)
     #endif
   #endif
 
