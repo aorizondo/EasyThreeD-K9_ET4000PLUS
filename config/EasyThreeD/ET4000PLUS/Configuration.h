@@ -140,7 +140,7 @@
 //#define BLUETOOTH
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "EasyThreeD K9"
+#define CUSTOM_MACHINE_NAME "Custom ET4000+"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -1198,14 +1198,14 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 606, 606, 600, 1040 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 75, 75, 756, 1040 }   // Custom ET4000+: X/Y=75, Z=756, E=1040 (extrusor K9)
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 20, 20, 20, 20 }   // mm/s. K10 factory values
+#define DEFAULT_MAX_FEEDRATE          { 600, 600, 5, 25 }   // mm/s. X/Y=600, Z MUY conservador=5, E=25
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1218,7 +1218,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 50, 50, 50, 100 }   // K10 factory values
+#define DEFAULT_MAX_ACCELERATION      { 150, 150, 20, 100 }   // X/Y=150, Z MUY conservador=20
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1233,9 +1233,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1000  // X, Y, Z and E acceleration for printing moves; K10 factory
-#define DEFAULT_RETRACT_ACCELERATION  1000  // E acceleration for retracts; K10 factory
-#define DEFAULT_TRAVEL_ACCELERATION   1000  // X, Y, Z acceleration for travel (non printing) moves; K10 factory
+#define DEFAULT_ACCELERATION          150   // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1000  // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   150   // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1307,7 +1307,7 @@
 //#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing
-//#define USE_PROBE_FOR_Z_HOMING
+#define USE_PROBE_FOR_Z_HOMING    // Custom ET4000+: Z hace homing con la sonda (no endstop)
 
 /**
  * Z_MIN_PROBE_PIN
@@ -1513,7 +1513,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { 0, 0, 0 }   // RECALIBRAR en la maquina nueva (M851 + M500)
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
@@ -1573,8 +1573,8 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-//#define MULTIPLE_PROBING 2
-//#define EXTRA_PROBING    1
+#define MULTIPLE_PROBING 3      // Sonda de baja calidad: 3 sondeos validos por punto
+#define EXTRA_PROBING    1      // +1 extra que se descarta (el mas atipico) -> 4 medidas totales
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
@@ -1605,7 +1605,7 @@
 #define Z_MIN_PROBE_REPEATABILITY_TEST
 
 // Before deploy/stow pause for user confirmation
-//#define PAUSE_BEFORE_DEPLOY_STOW
+#define PAUSE_BEFORE_DEPLOY_STOW   // Sonda de despliegue MANUAL: Marlin pausa y pide desplegar/recoger el brazo
 #if ENABLED(PAUSE_BEFORE_DEPLOY_STOW)
   //#define PAUSE_PROBE_DEPLOY_WHEN_TRIGGERED // For Manual Deploy Allenkey Probe
 #endif
@@ -1651,9 +1651,10 @@
 
 // Disable axis steppers immediately when they're not being stepped.
 // WARNING: When motors turn off there is a chance of losing position accuracy!
-#define DISABLE_X
-#define DISABLE_Y
-#define DISABLE_Z
+// Custom ET4000+: SIN endstops (no perder posicion) y la cama CAE si Z se apaga -> motores SIEMPRE activos.
+//#define DISABLE_X
+//#define DISABLE_Y
+//#define DISABLE_Z
 //#define DISABLE_I
 //#define DISABLE_J
 //#define DISABLE_K
@@ -1710,7 +1711,7 @@
 #define Z_HOMING_HEIGHT  15        // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
-#define Z_AFTER_HOMING  0.0         // (mm) Height to move to after homing Z
+#define Z_AFTER_HOMING  0.2         // (mm) Height to move to after homing Z
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
@@ -1727,16 +1728,16 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 100
-#define Y_BED_SIZE 100
+#define X_BED_SIZE 330
+#define Y_BED_SIZE 380
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 100
-#define Y_MAX_POS 100
-#define Z_MAX_POS 100
+#define X_MAX_POS 330
+#define Y_MAX_POS 380
+#define Z_MAX_POS 200
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -1806,7 +1807,7 @@
  * RAMPS-based boards use SERVO3_PIN for the first runout sensor.
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  */
-#define FILAMENT_RUNOUT_SENSOR
+//#define FILAMENT_RUNOUT_SENSOR   // Custom ET4000+: sin sensor de filamento (evita pausas falsas)
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define FIL_RUNOUT_ENABLED_DEFAULT false // Enable the sensor on startup. Override with M412 followed by M500.
   #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
@@ -2125,15 +2126,15 @@
  * - Allows Z homing only when XY positions are known and trusted.
  * - If stepper drivers sleep, XY homing may be required again before Z homing.
  */
-//#define Z_SAFE_HOMING
+#define Z_SAFE_HOMING   // Custom ET4000+: antes de bajar Z lleva el cabezal al punto fijo de sondeo
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT X_CENTER  // (mm) X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // (mm) Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT 165  // (mm) <-- CAMBIA a tu punto de sondeo Z preferido (recompilar)
+  #define Z_SAFE_HOMING_Y_POINT 190  // (mm) <-- CAMBIA a tu punto de sondeo Z preferido (recompilar)
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (30*60), (30*60), (6*60) }   // K10 XY + Z seguro para crash/probe homing
+#define HOMING_FEEDRATE_MM_M { (30*60), (30*60), (3*60) }   // X/Y 30mm/s crash suave, Z 3mm/s (sonda, MUY conservador)
 
 // Validate that endstops are triggered on homing moves
 //#define VALIDATE_HOMING_ENDSTOPS
@@ -2216,8 +2217,8 @@
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save flash.
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
-  //#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
-  //#define EEPROM_INIT_NOW   // Init EEPROM on first boot after a new build.
+  #define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
+  #define EEPROM_INIT_NOW   // Init EEPROM on first boot after a new build.
 #endif
 
 // @section host
@@ -2504,7 +2505,7 @@
  *
  * Use CRC checks and retries on the SD communication.
  */
-//#define SD_CHECK_AND_RETRY
+#define SD_CHECK_AND_RETRY   // Robustez de la SD (que hace de EEPROM): CRC + reintentos
 
 /**
  * LCD Menu Items
@@ -3249,8 +3250,8 @@
 //
 // EasyThreeD ET-4000+ with button input and status LED
 //
-#define EASYTHREED_UI
-#define EASYTHREED_ET4000PLUS // Mainboard model for Nano/recent K7
+//#define EASYTHREED_UI          // Custom ET4000+: SIN botones, slider de filamento ni LED de fabrica
+//#define EASYTHREED_ET4000PLUS // Mainboard model for Nano/recent K7
 
 //=============================================================================
 //=============================== Extra Features ==============================
