@@ -1205,7 +1205,7 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 600, 600, 5, 25 }   // mm/s. X/Y=600, Z MUY conservador=5, E=25
+#define DEFAULT_MAX_FEEDRATE          { 600, 600, 30, 25 }   // mm/s. X/Y=600, Z=30 (techo, para homing rapido), E=25
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -2134,7 +2134,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (30*60), (30*60), (3*60) }   // X/Y 30mm/s crash suave, Z 3mm/s (sonda, MUY conservador)
+#define HOMING_FEEDRATE_MM_M { (30*60), (30*60), (30*60) }   // X/Y 30mm/s crash suave, Z 30mm/s
 
 // Validate that endstops are triggered on homing moves
 //#define VALIDATE_HOMING_ENDSTOPS
