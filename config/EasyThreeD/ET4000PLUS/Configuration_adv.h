@@ -1126,7 +1126,7 @@
 #define DEFAULT_STEPPER_TIMEOUT_SEC 120
 #define DISABLE_IDLE_X
 #define DISABLE_IDLE_Y
-//#define DISABLE_IDLE_Z  // Custom ET4000+: DESACTIVADO. La cama CAE por gravedad si Z se desenergiza -> Z SIEMPRE activo
+#define DISABLE_IDLE_Z    // MK3: el eje Z sostiene sin corriente (correas+engranajes) -> se puede apagar en idle
 //#define DISABLE_IDLE_I
 //#define DISABLE_IDLE_J
 //#define DISABLE_IDLE_K
@@ -1312,7 +1312,7 @@
  *    M908 - BQ_ZUM_MEGA_3D, RAMBO, PRINTRBOARD_REVF, RIGIDBOARD_V2 & SCOOVO_X9H
  *    M909, M910 & LCD - only PRINTRBOARD_REVF & RIGIDBOARD_V2
  */
-#define PWM_MOTOR_CURRENT {500, 300, 800}          // Custom ET4000+: XY=500mA, Z=300mA, E=800mA
+#define PWM_MOTOR_CURRENT {500, 800, 800}          // MK3: XY=500mA, Z=800mA, E=800mA
 //#define DIGIPOT_MOTOR_CURRENT { 135,135,135,135,135 }   // Values 0-255 (RAMBO 135 = ~0.75A, 185 = ~1A)
 //#define DAC_MOTOR_CURRENT_DEFAULT { 70, 80, 90, 80 }    // Default drive percent - X, Y, Z, E axis
 
@@ -1590,7 +1590,7 @@
     #define POWER_LOSS_MIN_Z_CHANGE 0.05 // (mm) Minimum Z change before saving power-loss data
 
     // Enable if Z homing is needed for proper recovery. 99.9% of the time this should be disabled!
-    #define POWER_LOSS_RECOVER_ZHOME   // Custom ET4000+: la cama CAE al perder energia -> se pierde Z, hay que re-homear Z
+    //#define POWER_LOSS_RECOVER_ZHOME   // MK3: el eje Z sostiene en corte -> se confia la Z guardada, sin re-homear
     #if ENABLED(POWER_LOSS_RECOVER_ZHOME)
       #define POWER_LOSS_ZHOME_POS { X_CENTER, Y_CENTER } // XY para re-homear Z (= centro, punto de Z_SAFE_HOMING)
     #endif

@@ -140,7 +140,7 @@
 //#define BLUETOOTH
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "Custom ET4000+"
+#define CUSTOM_MACHINE_NAME "MK3"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -1198,7 +1198,7 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 75, 75, 756, 1040 }   // Custom ET4000+: X/Y=75, Z=756, E=1040 (extrusor K9)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 75, 75, 606, 1040 }   // MK3: X/Y=75, Z=606, E=1040 (extrusor K9)
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
@@ -1675,7 +1675,7 @@
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR true
-#define INVERT_Z_DIR true
+#define INVERT_Z_DIR false   // MK3: eje Z reconstruido con direccion invertida
 //#define INVERT_I_DIR false
 //#define INVERT_J_DIR false
 //#define INVERT_K_DIR false
@@ -1728,16 +1728,16 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 330
+#define X_BED_SIZE 350
 #define Y_BED_SIZE 380
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 330
+#define X_MAX_POS 350
 #define Y_MAX_POS 380
-#define Z_MAX_POS 250
+#define Z_MAX_POS 110
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
